@@ -1,0 +1,14 @@
+import { readFile, mkdir, writeFile } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
+import { execFileSync } from 'node:child_process';
+const { version } = JSON.parse(await readFile('package.json', 'utf8'));
+if (!/^\d+\.\d+\.\d+$/.test(version)) throw Error('Release version must be major.minor.patch');
+if (process.env.GITHUB_REF_TYPE === 'tag' && process.env.GITHUB_REF_NAME !== `v${version}`) throw Error('Tag and package version differ');
+const app = 'dist/PersonalAgent-darwin-arm64/PersonalAgent.app';
+execFileSync('codesign', ['--verify', '--deep', '--strict', app], { stdio: 'inherit' });
+await mkdir('release', { recursive: true });
+const name = `PersonalAgent-${version}-darwin-arm64.zip`;
+execFileSync('ditto', ['-c', '-k', '--sequesterRsrc', '--keepParent', app, `release/${name}`]);
+const checksum = createHash('sha256').update(await readFile(`release/${name}`)).digest('hex');
+await writeFile('release/SHA256SUMS.txt', `${checksum}  ${name}\n`);
+console.log(`release/${name}`);

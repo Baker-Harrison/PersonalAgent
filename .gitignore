@@ -1,0 +1,14 @@
+node_modules/
+.eve/
+.output/
+.next/
+.env*
+!.env.example
+auth.json
+*.log
+coverage/
+.DS_Store
+desktop-dist/
+dist/
+
+release/

@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'none'; frame-src data:">
+  <title>PersonalAgent</title><link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <section id="onboarding" hidden aria-label="Welcome to PersonalAgent">
+    <div class="onboarding-drag"></div>
+    <div class="onboarding-content">
+      <img class="onboarding-art" src="assets/onboarding.png" alt="Two small clay agents working together at a laptop">
+      <p id="onboarding-step" class="onboarding-step">1 of 3</p>
+      <h1 id="onboarding-title" tabindex="-1">Meet PersonalAgent</h1>
+      <p id="onboarding-description">Talk through an idea. Give your agents a task. Keep the conversation going while they work.</p>
+      <p id="onboarding-status" role="status"></p>
+      <div class="onboarding-actions"><button id="onboarding-back">Back</button><button id="onboarding-next" class="primary-button">Next</button></div>
+      <button id="onboarding-cancel" hidden>Cancel sign-in</button>
+    </div>
+  </section>
+  <aside class="sidebar">
+    <div class="window-drag"></div>
+    <div class="sidebar-heading"><span>Projects</span><button id="add-project" class="icon-button" title="Add project" aria-label="Add project">+</button></div>
+    <nav id="projects" aria-label="Projects"></nav>
+    <div class="sidebar-bottom"><button id="update-app" type="button" hidden title="Download the latest release">Update available</button><span id="connection" class="connection" title="Checking sign-in"></span></div>
+  </aside>
+  <main>
+    <header class="topbar"><div id="project-title"></div><div class="worker-dock" id="worker-dock" hidden>
+      <div id="worker-list" class="worker-list" aria-label="Worker agents"></div>
+    </div></header>
+    <section id="conversation" aria-label="Conversation"><div id="welcome" class="welcome"><h1>Projects</h1><p>Add a project folder to get started.</p><button id="welcome-add" class="primary-button">Add a project</button></div><div id="messages"></div><div id="agent-progress" class="agent-progress" role="status" hidden><span class="agent-spinner" aria-hidden="true"></span><span id="agent-progress-text"></span></div></section>
+    <div class="composer-area" id="composer-area" hidden>
+      <div class="conversation-controls"><button id="new-messages" hidden>New messages ↓</button></div>
+      <form id="composer" class="composer"><div id="attachments" aria-label="Attachments"></div><textarea id="message" rows="1" placeholder="Ask anything, or describe a task…" aria-label="Message"></textarea><div class="composer-bottom"><div class="composer-tools"><button type="button" id="show-browser" class="icon-button" aria-label="Browser activity" title="Browser activity"></button><button type="button" id="attach" aria-label="Attach files">+</button></div><div class="send-actions"><button id="send" class="send-button" title="Send message" aria-label="Send message" disabled></button></div></div></form>
+
+    </div>
+  </main>
+  <div id="worker-menu" class="context-menu" role="menu" hidden><button id="worker-rename" role="menuitem">Rename</button><button id="worker-delete" role="menuitem">Delete</button></div>
+  <div id="project-menu" class="context-menu" role="menu" hidden><button id="project-remove" role="menuitem">Remove project</button></div>
+  <dialog id="rename-dialog"><form id="rename-form"><label for="rename-input">Name</label><input id="rename-input" maxlength="60" required><div class="dialog-footer"><button type="button" id="rename-cancel">Cancel</button><button class="primary-button">Rename</button></div></form></dialog>
+  <dialog id="file-dialog"><div class="dialog-heading"><h2 id="file-title"></h2><button id="file-close" aria-label="Close preview">×</button></div><div id="file-content"></div><div class="dialog-footer"><button id="file-open">Open locally</button></div></dialog>
+  <div id="toast" role="alert" hidden></div>
+  <dialog id="project-dialog"><form id="project-form">
+    <div class="dialog-heading"><h2 id="dialog-title">Project settings</h2><button type="button" id="close-dialog" class="icon-button" aria-label="Close settings">×</button></div>
+    <div class="folder-row"><span id="folder-icon"></span><span id="folder-name"></span></div>
+    <section class="settings-group"><h3>Coordinator</h3><p>The agent you talk to.</p><div class="select-row"><label>Model<select id="coordinator-model"></select></label><label class="reasoning-label">Reasoning<select id="coordinator-reasoning"></select></label></div></section>
+    <section class="settings-group"><h3>Workers</h3><p>The agents that carry out the work.</p><div class="select-row"><label>Model<select id="worker-model"></select></label><label class="reasoning-label">Reasoning<select id="worker-reasoning"></select></label></div></section>
+    <p id="settings-note" class="settings-note"></p><div class="dialog-footer"><button type="button" id="cancel-dialog" class="secondary-button">Cancel</button><button id="save-project" class="primary-button">Save changes</button></div>
+  </form></dialog>
+  <script type="module" src="app.js"></script>
+</body>
+</html>

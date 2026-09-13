@@ -1,0 +1,32 @@
+name: Release
+on:
+  push:
+    tags: ['v*']
+permissions:
+  contents: write
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  release:
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm test
+      - run: npm run release:artifacts
+      - run: env -u ELECTRON_RUN_AS_NODE node_modules/.bin/electron scripts/desktop-ui-check.cjs
+      - uses: actions/upload-artifact@v4
+        with:
+          name: PersonalAgent-macos-arm64
+          path: release/*
+      - name: Publish release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "$GITHUB_REF_NAME" release/* --verify-tag --title "PersonalAgent $GITHUB_REF_NAME" --notes-file docs/release-notes.md
