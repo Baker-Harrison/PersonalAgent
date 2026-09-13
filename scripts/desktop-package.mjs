@@ -29,7 +29,7 @@ execFileSync('desktop-dist/runtime/node', ['--version']);
 const paths = await packager({ dir: '.', out: process.env.PERSONALAGENT_PACKAGE_OUT || 'dist', name: 'PersonalAgent', executableName: 'PersonalAgent', platform: 'darwin', arch: 'arm64', overwrite: true, asar: false,
   appBundleId: 'local.personalagent.desktop', appVersion: metadata.version, appCopyright: 'PersonalAgent',
   extraResource: ['desktop-dist/runtime'],
-  ignore: [/^\/\.env/, /^\/(auth\.json|.*\.log)$/, /^\/desktop-dist\/runtime\.json$/, /^\/(research|examples|test-projects|test|scripts|docs|\.github|\.eve|\.git|\.agents|release|dist)(\/|$)/, /^\/desktop-dist\/(runtime|node-download)(\/|$)/, /^\/node_modules\/(electron|@electron\/packager)(\/|$)/],
+  ignore: [/^\/\.env/, /^\/(auth\.json|.*\.log)$/, /^\/desktop-dist\/runtime\.json$/, /^\/(research|examples|test-projects|test|scripts|docs|coverage|\.output|\.next|\.github|\.eve|\.git|\.agents|release|dist)(\/|$)/, /^\/desktop-dist\/(runtime|node-download)(\/|$)/, /^\/node_modules\/(electron|@electron\/packager)(\/|$)/],
   prune: true,
 });
 console.log(paths.join('\n'));
