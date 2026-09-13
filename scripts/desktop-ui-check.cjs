@@ -6,7 +6,7 @@ app.whenReady().then(async () => {
   try {
     await window.loadFile(resolve(process.argv[2] || '.', 'desktop/ui/index.html'));
     const result = await window.webContents.executeJavaScript(`(async () => {
-      const wait = ms => new Promise(r => setTimeout(r, ms));
+      const wait = async ms => { await new Promise(r => setTimeout(r, ms)); await new Promise(requestAnimationFrame); };
       const check = (condition, message) => { if (!condition) throw Error(message); };
       await wait(100);
       const $ = id => document.getElementById(id);
