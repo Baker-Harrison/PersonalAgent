@@ -10,8 +10,8 @@ To release:
 4. Commit the version and release notes, then push main.
 5. Create an annotated tag matching package.json, for example `git tag -a v0.1.1 -m 'PersonalAgent 0.1.1'`, and push that tag.
 
-The Release workflow repeats checks, packages the app with a standalone Node runtime, verifies its ad-hoc signature, produces an Apple Silicon ZIP and SHA-256 checksum, and publishes a GitHub release only after checks pass. Never reuse a published version or replace its assets; ship a new patch release.
+The Release workflow repeats checks, packages the app with a standalone Node runtime, verifies its ad-hoc signature, produces an Apple Silicon DMG and SHA-256 checksum, and publishes a GitHub release only after checks pass. Never reuse a published version or replace its assets; ship a new patch release.
 
-The update check runs at startup and hourly. It ignores drafts, prereleases, equal/older versions, and releases without the matching ZIP. Offline failures do not interrupt chat. Clicking the sidebar update button opens the trusted GitHub release page. Users quit and replace the app manually. User data remains outside the bundle.
+The update check runs at startup and hourly. It ignores drafts, prereleases, equal/older versions, and releases without the matching DMG. Offline failures do not interrupt chat. Clicking the sidebar update button opens the trusted GitHub release page. Users quit and replace the app manually. User data remains outside the bundle.
 
 Developer ID signing and Apple notarization are not configured. These early releases do not provide automatic installation. Add signing and notarization before broader distribution.

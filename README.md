@@ -4,9 +4,9 @@ A macOS app for working on local projects with an AI agent. Each project has a s
 
 ## Install
 
-Download the Apple Silicon ZIP from [Releases](https://github.com/Baker-Harrison/PersonalAgent/releases), extract it, and move PersonalAgent.app into Applications. Sign in when the app opens, then add a project folder.
+Download the Apple Silicon DMG from [Releases](https://github.com/Baker-Harrison/PersonalAgent/releases), open it, and drag PersonalAgent.app into Applications. Sign in when the app opens, then add a project folder.
 
-Early testing builds are not Developer ID signed or notarized. macOS may block them. The ZIP includes the Node runtime; no separate Node installation is needed for the packaged app.
+Early testing builds are not Developer ID signed or notarized. macOS may block them. The DMG includes the Node runtime; no separate Node installation is needed for the packaged app.
 
 The agent can execute commands and modify files in your selected projects. Workers share the project folder. Use version control and review changes during testing.
 
@@ -29,7 +29,7 @@ npm test
 npm run release:artifacts
 ```
 
-The final command produces a ZIP and SHA-256 checksum in `release/`. See [the release process](docs/releases.md).
+The final command produces a DMG and SHA-256 checksum in `release/`. See [the release process](docs/releases.md).
 
 The desktop uses Electron, Eve, and Pi. ChatGPT authentication is stored locally, outside the repository. Never commit credentials or application data. Browser actions require the app to remain open; background command work can continue after the window closes.
 

@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { availableUpdate, checkForUpdate } from '../desktop/updates.ts';
-const release = (version: string) => ({ tag_name: `v${version}`, assets: [{ name: `PersonalAgent-${version}-darwin-arm64.zip`, state: 'uploaded', size: 10 }] });
+const release = (version: string) => ({ tag_name: `v${version}`, assets: [{ name: `PersonalAgent-${version}-darwin-arm64.dmg`, state: 'uploaded', size: 10 }] });
 test('updates compare numeric versions and require usable published artifacts', () => {
   assert.equal(availableUpdate('0.9.0', release('0.10.0'))?.version, '0.10.0');
   for (const value of [release('0.1.0'), release('0.0.9'), { ...release('0.2.0'), draft: true }, { ...release('0.2.0'), prerelease: true }, { ...release('0.2.0'), assets: [] }, { tag_name: 'garbage' }]) assert.equal(availableUpdate('0.1.0', value), null);

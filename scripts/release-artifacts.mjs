@@ -1,4 +1,4 @@
-import { readFile, mkdir, writeFile } from 'node:fs/promises';
+import { readFile, mkdir, writeFile, symlink } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 const { version } = JSON.parse(await readFile('package.json', 'utf8'));
@@ -7,8 +7,10 @@ if (process.env.GITHUB_REF_TYPE === 'tag' && process.env.GITHUB_REF_NAME !== `v$
 const app = 'dist/PersonalAgent-darwin-arm64/PersonalAgent.app';
 execFileSync('codesign', ['--verify', '--deep', '--strict', app], { stdio: 'inherit' });
 await mkdir('release', { recursive: true });
-const name = `PersonalAgent-${version}-darwin-arm64.zip`;
-execFileSync('ditto', ['-c', '-k', '--sequesterRsrc', '--keepParent', app, `release/${name}`]);
+const name = `PersonalAgent-${version}-darwin-arm64.dmg`;
+const folder = 'dist/PersonalAgent-darwin-arm64';
+await symlink('/Applications', `${folder}/Applications`).catch(error => { if (error.code !== 'EEXIST') throw error; });
+execFileSync('hdiutil', ['create', '-volname', 'PersonalAgent', '-srcfolder', folder, '-ov', '-format', 'UDZO', `release/${name}`], { stdio: 'inherit' });
 const checksum = createHash('sha256').update(await readFile(`release/${name}`)).digest('hex');
 await writeFile('release/SHA256SUMS.txt', `${checksum}  ${name}\n`);
 console.log(`release/${name}`);

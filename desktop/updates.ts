@@ -10,7 +10,7 @@ export function availableUpdate(current: string, release: any): AvailableUpdate 
   const different = after.findIndex((part, index) => part !== before[index]);
   if (different < 0 || after[different] < before[different]) return null;
   const version = after.join('.');
-  const asset = `PersonalAgent-${version}-darwin-arm64.zip`;
+  const asset = `PersonalAgent-${version}-darwin-arm64.dmg`;
   if (!Array.isArray(release.assets) || !release.assets.some((item: any) => item.name === asset && item.state === 'uploaded' && item.size > 0)) return null;
   return { version, url: `https://github.com/${releaseRepository}/releases/tag/v${version}` };
 }
