@@ -1,6 +1,6 @@
 {
   "name": "experiment8",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "PersonalAgent desktop app for local projects",
   "scripts": {
     "dev": "eve dev --host 127.0.0.1",
@@ -21,7 +21,8 @@
     "desktop:package": "npm run desktop:build && node scripts/desktop-package.mjs",
     "test:security": "tsx --test test/security.test.ts",
     "test:desktop:live": "tsx scripts/desktop-live-check.ts",
-    "release:artifacts": "npm run desktop:package && node scripts/release-artifacts.mjs"
+    "release:artifacts": "npm run desktop:package && node scripts/release-artifacts.mjs",
+    "pretest": "npm run desktop:build"
   },
   "keywords": [],
   "author": "",
